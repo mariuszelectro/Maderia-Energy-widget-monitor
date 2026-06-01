@@ -27,4 +27,8 @@ It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the sea
 1. Download and install the [Scriptable app](https://apps.apple.com/app/scriptable/id1405459188) from the iOS App Store.
 2. Open Scriptable, create a new script, and name it (e.g., `EEM Tariff`).
 3. Copy the entire JavaScript code provided below and paste it into the editor.
-4. Go to your iOS/iPadOS Home Screen, add a **Medium Scriptable Widget**, long-press it to edit, and choose `EEM Tariff` as the source 
+4. Go to your iOS/iPadOS Home Screen, add a **Medium Scriptable Widget**, long-press it to edit, and choose `EEM Tariff` as the source
+5. results on screen
+<img width="810" height="404" alt="IMG_2432" src="https://github.com/user-attachments/assets/84a165c8-6c81-4809-98a2-f23538cace34" />
+
+enjoy
