@@ -10,6 +10,15 @@ It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the sea
 
 [![Kup mi kawę](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=mariuszelectro&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/mariuszelectro)
 
+---
+
+## 📱 Compatibility
+
+This widget is fully optimized, tested, and **100% compatible** with both Apple devices:
+* 🍏 **iPhone** (iOS 14+)
+* 🍏 **iPad** (iPadOS 14+)
+
+The interface automatically scales and adjusts its layout perfectly whether it is placed on a smaller mobile screen or a larger tablet grid.
 
 ---
 
@@ -46,13 +55,27 @@ The widget natively supports 3 languages. You can switch between them instantly 
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Installation & Setup Guide
 
+### Phase 1: Adding the Code to Scriptable
 1. Download and install the [Scriptable app](https://apps.apple.com/app/scriptable/id1405459188) from the iOS App Store.
-2. Open Scriptable, create a new script, and name it (e.g., `EEM Tariff`).
-3. Copy the entire JavaScript code provided in `eem-tariff.js` and paste it into the editor.
-4. Go to your iOS/iPadOS Home Screen, add a **Medium Scriptable Widget**, long-press it to edit, and choose `EEM Tariff` as the source.
-5. Set your language code in the **Parameter** line (optional).
+2. Open the Scriptable app on your iPhone or iPad.
+3. Click the plus icon (**+**) in the top right corner to create a new script.
+4. Tap the title at the top (e.g., *Untitled Script*) and rename it to `EEM Tariff`.
+5. Copy the entire JavaScript code provided in `eem-tariff.js`, paste it into the editor, and tap **Done** (top left).
+
+### Phase 2: Launching the Widget on your Home Screen (iPhone & iPad)
+1. Go to your device's **Home Screen**.
+2. **Long-press (press and hold)** any empty space or an icon until all the apps start to jiggle.
+3. Tap the plus icon (**+**) that appears in the **top-left corner** of the screen.
+4. Scroll down the list or use the search bar to find and select **Scriptable**.
+5. Swipe to find the **Medium-sized widget layout** (rectangular layout) and tap **Add Widget**.
+6. While the apps are still jiggling (or by long-pressing the newly added widget), tap directly on the widget to open its iOS settings block.
+7. Configure the options as follows:
+   * **Script:** Select `EEM Tariff`.
+   * **When Interacting:** Open App (or choose *Run Script* / *Do Nothing* based on your preference).
+   * **Parameter:** Type your language code here (`pl`, `pt`, `en`) or leave it blank for default Polish.
+8. Tap anywhere on the empty screen to exit edit mode. Your live tracking monitor is now active!
 
 ### Results on screen:
 
@@ -60,11 +83,5 @@ The widget natively supports 3 languages. You can switch between them instantly 
 <img width="860" height="417" alt="image" src="https://github.com/user-attachments/assets/6238bc32-c66b-41a7-a621-b58fc5cd43fe" />
 <img width="2367" height="849" alt="image" src="https://github.com/user-attachments/assets/447bc8ed-711f-4984-a6b0-a2fc421c0b1d" />
 
-
-
-
-
-
-
-
+---
 enjoy
