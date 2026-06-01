@@ -15,11 +15,12 @@ It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the sea
 * **Timezone-Locked:** Hardcoded to Madeira time. No matter where you travel, the widget always shows the correct status on the island.
 * **Seasonal Awareness:** Automatically shifts schedules between **Summer** (June – October) and **Winter** (November – May) based on EEM regulations.
 * **Visual Distinction:** Dynamic background colors based on the current active tariff:
-    * 🔵 **TANIA (Vazio)** - Light Blue
-    * 🟢 **ŚREDNIA (Cheias)** - Green
-    * 🔴 **DROGA (Ponta)** - Red
+    * 🔵 **TANIA (Vazio) cheap** - Light Blue
+    * 🟢 **ŚREDNIA (Cheias) medium** - Green
+    * 🔴 **DROGA (Ponta) expensive** - Red
 * **Boundary Protection:** Built-in safeguards preventing negative timer glitches or UI freezing during sharp tariff transitions.
 * **Testing Mode:** Includes an internal variable override to easily simulate any day or time of the week without messing with system clocks.
+* for adjuust for your language you shall translate yourselef in code dierctly
 
 ---
 
