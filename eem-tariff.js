@@ -1,19 +1,78 @@
 // ==================================================
-// 🧪 TRYB TESTOWY 
-// Jeśli chcesz testować, odkomentuj poniższą linię (usuń //):
-// let now = new Date(2026, 5, 6, 22, 45, 0) // Sobota, 6 czerwca, 22:45
+// 🌍 DYNAMIC CONFIGURATION (iOS PARAMETER & AUTO-TEST)
+// Default language if the language parameter is omitted: "pl", "pt", or "en"
+let defaultLang = "pl"; 
 
-// Flaga sprawdzająca, czy używamy trybu testowego
-let isTesting = (typeof now !== 'undefined');
+let LANG = defaultLang;
+let isTesting = false;
+let now;
 
-// Jeśli powyższa linia jest zakomentowana (ma //), bierzemy normalny czas:
+// Parse the iOS Widget parameter (supports separation by semicolon, e.g., "pt; 12-05-2026 17:23")
+if (args.widgetParameter) {
+  let params = args.widgetParameter.split(";");
+  
+  // 1. Extract and clean the language token
+  let langInput = params[0].trim().toLowerCase();
+  if (["pl", "pt", "en"].includes(langInput)) {
+    LANG = langInput;
+  }
+  
+  // 2. Check for a secondary test date parameter (Format: DD-MM-YYYY HH:MM)
+  if (params.length > 1 && params[1].trim().length > 0) {
+    let dateStr = params[1].trim(); // e.g., "12-05-2026 17:23"
+    
+    // Regex matching DD-MM-YYYY HH:MM
+    let dateReg = /^(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2})$/;
+    let match = dateStr.match(dateReg);
+    
+    if (match) {
+      let targetDay = parseInt(match[1], 10);
+      let targetMonth = parseInt(match[2], 10) - 1; // JS months are 0-11
+      let targetYear = parseInt(match[3], 10);
+      let targetHour = parseInt(match[4], 10);
+      let targetMinute = parseInt(match[5], 10);
+      
+      now = new Date(targetYear, targetMonth, targetDay, targetHour, targetMinute, 0);
+      isTesting = true;
+    }
+  }
+}
+
+// Fallback to current hardware time if testing mode wasn't triggered via parameter
 if (!isTesting) {
-  now = new Date()
+  now = new Date();
 }
 // ==================================================
 
+// ---------- LOCALIZATION TABLE (DICTIONARY) ----------
+const TRANSLATIONS = {
+  pl: {
+    tania: "TANIA",
+    srednia: "ŚREDNIA",
+    droga: "DROGA",
+    unknown: "NIEZNANA",
+    footer: "do zmiany taryfy"
+  },
+  pt: {
+    tania: "VAZIO",
+    srednia: "CHEIAS",
+    droga: "PONTA",
+    unknown: "DESCONHECIDO",
+    footer: "para mudar tarifa"
+  },
+  en: {
+    tania: "OFF-PEAK",
+    srednia: "MID-PEAK",
+    droga: "PEAK",
+    unknown: "UNKNOWN",
+    footer: "until tariff change"
+  }
+};
+
+let i18n = TRANSLATIONS[LANG] || TRANSLATIONS["en"];
+
 let year, month, day, hour, minute
-let realNow = new Date() // Prawdziwy czas urządzenia dla stopera Apple
+let realNow = new Date() // Real device time strictly reserved for the native Apple timer component
 
 if (isTesting) {
   year = now.getFullYear()
@@ -44,7 +103,7 @@ let weekday = checkDate.getDay()
 let currentMinOfWeek = (weekday * 1440) + (hour * 60 + minute)
 let isSummer = (month >= 6 && month <= 10)
 
-// ---------- FUNKCJA ZWRACAJĄCA TARYFĘ DLA DOWOLNEJ MINUTY TYGODNIA ----------
+// ---------- TARIFF LOOKUP FUNCTION FOR ANY GIVEN MINUTE OF THE WEEK ----------
 function getTariffForMinutes(totalMinutes) {
   let minOfWeek = totalMinutes % 10080
   if (minOfWeek < 0) minOfWeek += 10080
@@ -53,23 +112,23 @@ function getTariffForMinutes(totalMinutes) {
   let minOfDay = minOfWeek % 1440
 
   if (isSummer) {
-    if (d >= 1 && d <= 5) { // Poniedziałek - Piątek
+    if (d >= 1 && d <= 5) { // Monday - Friday
       if (minOfDay >= 0 && minOfDay < 420) return "tania"       
       if (minOfDay >= 420 && minOfDay < 660) return "średnia"   
       if (minOfDay >= 660 && minOfDay < 840) return "droga"     
       if (minOfDay >= 840 && minOfDay < 1200) return "średnia"  
       if (minOfDay >= 1200 && minOfDay < 1320) return "droga"   
       return "średnia"                                          
-    } else if (d === 6) { // Sobota
+    } else if (d === 6) { // Saturday
       if (minOfDay >= 0 && minOfDay < 660) return "tania"       
       if (minOfDay >= 660 && minOfDay < 870) return "średnia"   
       if (minOfDay >= 870 && minOfDay < 1170) return "tania"    
       if (minOfDay >= 1170 && minOfDay < 1380) return "średnia" 
       return "tania"                                            
-    } else { // Niedziela
+    } else { // Sunday
       return "tania"                                            
     }
-  } else { // ZIMA
+  } else { // WINTER
     if (d >= 1 && d <= 5) { 
       if (minOfDay >= 0 && minOfDay < 420) return "tania"
       if (minOfDay >= 420 && minOfDay < 1140) return "średnia"
@@ -87,7 +146,7 @@ function getTariffForMinutes(totalMinutes) {
   }
 }
 
-// ---------- LOGIKA SZUKANIA NAJBLIŻSZEJ ZMIANY ----------
+// ---------- SEARCH LOGIC FOR THE CLOSING TARIFF BOUNDARY ----------
 let currentTariff = getTariffForMinutes(currentMinOfWeek)
 let targetMinutes = 0
 let nextTariff = currentTariff
@@ -97,18 +156,18 @@ while (nextTariff === currentTariff && targetMinutes < 20000) {
   nextTariff = getTariffForMinutes(currentMinOfWeek + targetMinutes)
 }
 
-// Obliczamy cel odliczania dla systemu iOS
+// APPLE TIMER FIX: Syncing accurate target runtime relative to system clock
 let targetDate = new Date(realNow.getTime())
 targetDate.setMinutes(targetDate.getMinutes() + targetMinutes)
 targetDate.setSeconds(0)
 
-// BEZPIECZNE WYPOWADZENIE GODZINY ZMIANY
+// Safe display logic mapping the exact hour/minute for the preview panel
 let totalNextMinutes = hour * 60 + minute + targetMinutes
 let nextHour = Math.floor(totalNextMinutes / 60) % 24
 let nextMin = totalNextMinutes % 60
 let nextTariffTimeText = (nextHour < 10 ? "0" + nextHour : nextHour) + ":" + (nextMin < 10 ? "0" + nextMin : nextMin)
 
-// ---------- ORYGINALNA PALETA KOLORÓW WIDŻETU ----------
+// ---------- WIDGET COLOR PALETTES ----------
 function getColor(tariffName) {
   if (tariffName === "tania") return new Color("#0288D1")   
   if (tariffName === "średnia") return new Color("#2E7D32") 
@@ -116,7 +175,14 @@ function getColor(tariffName) {
   return new Color("#222222")
 }
 
-// ---------- BUDOWA UKŁADU GRAFICZNEGO WIDŻETU ----------
+function getTariffLabel(tariffName) {
+  if (tariffName === "tania") return i18n.tania;
+  if (tariffName === "snia" || tariffName === "średnia") return i18n.srednia;
+  if (tariffName === "droga") return i18n.droga;
+  return i18n.unknown;
+}
+
+// ---------- UI LAYOUT ASSEMBLY ----------
 let widget = new ListWidget()
 widget.setPadding(0, 0, 0, 0) 
 
@@ -130,15 +196,14 @@ leftStack.setPadding(14, 14, 14, 14)
 
 leftStack.addSpacer()
 
-let tariffMap = { "tania": "TANIA", "średnia": "ŚREDNIA", "droga": "DROGA" }
-let title = leftStack.addText(tariffMap[currentTariff] || "NIEZNANA")
+let title = leftStack.addText(getTariffLabel(currentTariff))
 title.font = Font.boldSystemFont(20)
 title.textColor = Color.white()
 title.centerAlignText()
 
 leftStack.addSpacer(8)
 
-// OCHRONA PRZED UJEMNYM STOPEREM: Jeśli czas minął, a system nie odświeżył – sztywno pokazujemy zero
+// ANTI-NEGATIVE TIMER SAFEGUARD: Freezes UI at zero if iOS background engine lags
 if (targetMinutes <= 0) {
   let fallbackText = leftStack.addText("00:00")
   fallbackText.font = Font.boldSystemFont(32)
@@ -154,7 +219,7 @@ if (targetMinutes <= 0) {
 
 leftStack.addSpacer(4)
 
-let small = leftStack.addText("do zmiany taryfy")
+let small = leftStack.addText(i18n.footer)
 small.font = Font.systemFont(11)
 small.textColor = new Color("#E0E0E0")
 small.centerAlignText()
@@ -180,14 +245,11 @@ timeTitle.centerAlignText()
 
 rightStack.addSpacer()
 
-// ==================================================
-// 🔄 DYNAMICZNY SYSTEM ODŚWIEŻANIA (ZABEZPIECZENIE)
-// Nakazujemy systemowi iOS przeładowanie dokładnie w minucie zmiany taryfy!
+// ---------- DYNAMIC REFRESH MONITORING ----------
 let refreshDate = new Date(realNow.getTime())
 refreshDate.setMinutes(refreshDate.getMinutes() + targetMinutes)
-refreshDate.setSeconds(1) // Dodajemy 1 sekundę marginesu
+refreshDate.setSeconds(1) 
 widget.refreshAfterDate = refreshDate
-// ==================================================
 
 if (config.runsInWidget) {
   Script.setWidget(widget)
@@ -196,3 +258,4 @@ if (config.runsInWidget) {
 }
 
 Script.complete()
+
