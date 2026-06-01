@@ -32,5 +32,14 @@ It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the sea
 4. Go to your iOS/iPadOS Home Screen, add a **Medium Scriptable Widget**, long-press it to edit, and choose `EEM Tariff` as the source
 5. results on screen
 <img width="810" height="404" alt="IMG_2432" src="https://github.com/user-attachments/assets/84a165c8-6c81-4809-98a2-f23538cace34" />
+<img width="860" height="417" alt="image" src="https://github.com/user-attachments/assets/6238bc32-c66b-41a7-a621-b58fc5cd43fe" />
+<img width="2367" height="849" alt="image" src="https://github.com/user-attachments/assets/447bc8ed-711f-4984-a6b0-a2fc421c0b1d" />
+
+
+
+
+
+
+
 
 enjoy
