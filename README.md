@@ -20,7 +20,7 @@ It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the sea
     * 🔴 **DROGA (Ponta) expensive** - Red
 * **Boundary Protection:** Built-in safeguards preventing negative timer glitches or UI freezing during sharp tariff transitions.
 * **Testing Mode:** Includes an internal variable override to easily simulate any day or time of the week without messing with system clocks.
-* for adjuust for your language you shall translate yourselef in code dierctly
+* for adjust for your language, you shall translate in code dierctly, yourself..... 
 
 ---
 
