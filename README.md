@@ -4,7 +4,8 @@ Save on electricity in Madeira: Live Tariff Tracker &amp; Countdown Widget for i
 
 A beautiful, smart, and production-ready iOS medium-sized widget for **Scriptable** that tracks real-time electricity tariffs for **EEM (Empresa de Electricidade da Madeira)**. 
 
-It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the seasonal changes between **Summer and Winter schedules**, and includes a live countdown timer to the next tariff change, locked strictly to the **Madeira timezone (`Atlantic/Madeira`)**.
+It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the seasonal changes between **Summer and Winter schedules**, and includes a live countdown timer to the next tariff change , amd mext tarrif, locked strictly to the **Madeira timezone (`Atlantic/Madeira`)**. 
+**It allow plan energy usage and save money.**
 
 ---
 
