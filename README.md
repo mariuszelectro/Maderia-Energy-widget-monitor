@@ -8,6 +8,9 @@ A beautiful, smart, and production-ready iOS medium-sized widget for **Scriptabl
 It automatically adapts to the **Weekly Cycle (Ciclo Semanal)**, handles the seasonal changes between **Summer and Winter schedules**, and includes a live countdown timer to the next tariff change and shows the next incoming tariff, locked strictly to the **Madeira timezone (`Atlantic/Madeira`)**. 
 **It allows you to plan energy usage and save money.**
 
+[![Kup mi kawę](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=mariuszelectro&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/mariuszelectro)
+
+
 ---
 
 ## 📸 Features
